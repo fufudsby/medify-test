@@ -46,13 +46,15 @@
                     var kode = item.kode;
 
                     var html = `<a href="{{url('master-items/view/')}}/` + kode + `" class="btn btn-primary">View</a>`
-
+                    var foto_html = item.foto ? `<img src="/storage/${item.foto}" width="60" height="60" style="object-fit: cover;">` : '';
+                    
                     $.each(item, function(obj_name, obj_value) {
                         if (obj_name == 'laba') return false;
                         array_temp.push(obj_value)
                     })
                     array_temp.push(harga_jual)
                     array_temp.push(item.supplier)
+                    array_temp.push(foto_html)
                     array_temp.push(html)
 
 

@@ -41,6 +41,12 @@
                         @guest
                         @if (Route::has('login'))
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/categories') }}">{{ __('Kategori') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/master-items') }}">{{ __('Master Item') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @endif

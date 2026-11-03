@@ -1,4 +1,4 @@
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     @csrf
     @if($method == 'edit')
     <div class="form-group">
@@ -31,7 +31,7 @@
             <option @if($selected == 'Bukulapuk') selected @endif>Bukulapuk</option>
             <option @if($selected == 'TokoBagas') selected @endif>TokoBagas</option>
             <option @if($selected == 'E Commurz') selected @endif>E Commurz</option>
-            <optio @if($selected == 'Blublu') selected @endif>Blublu</option>
+            <option @if($selected == 'Blublu') selected @endif>Blublu</option>
         </select>
     </div>
 
@@ -43,11 +43,61 @@
             <option @if($selected == 'Obat') selected @endif>Obat</option>
             <option @if($selected == 'Alkes') selected @endif>Alkes</option>
             <option @if($selected == 'Matkes') selected @endif>Matkes</option>
-            <optio @if($selected == 'Umum') selected @endif>Umum</option>
-            <optio @if($selected == 'ATK') selected @endif>ATK</option>
+            <option @if($selected == 'Umum') selected @endif>Umum</option>
+            <option @if($selected == 'ATK') selected @endif>ATK</option>
         </select>
+    </div>
+
+    <div class="form-group">
+        <label for="category">Category</label>
+        <select name="categories[]" id="categories" class="form-control" multiple>
+            @foreach ($categories as $category)
+                <option
+                    value="{{ $category->id }}"
+                    {{ $item->categories->contains('id', $category->id) ? 'selected' : '' }}
+                >
+                    {{ $category->kode }} - {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="foto">Foto Item</label>
+        <div class="d-flex">
+                <div class="mx-2">
+                    <img
+                        id="img_preview"
+                        src="{{ !empty($item['foto']) ? asset('storage/' . $item['foto']) : '' }}"
+                        alt="img"
+                        width="200"
+                        style="{{ !empty($item['foto']) ? '' : 'display: none;' }}; margin-top: 10px; object-fit: cover;"
+                    >
+                </div>
+            <div class="flex-grow-1">
+                <input
+                    type="file"
+                    name="foto"
+                    id="foto"
+                    class="form-control"
+                    accept="image/*"
+                >
+            </div>
+        </div>
     </div>
 
     <button class="btn btn-primary mt-3">Submit</button>
 
 </form>
+
+<script>
+    document.getElementById('foto').addEventListener('change', function (event) {
+        const preview_foto = document.getElementById('img_preview');
+        const file = event.target.files[0];
+
+        if (file) {
+            preview_foto.src = URL.createObjectURL(file);
+            preview_foto.style.display = 'block';
+        }
+    });
+</script>
